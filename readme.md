@@ -58,7 +58,10 @@ where "Zk - HXk` " is called measurement residual. It is the error term between 
 What’s more, in the equation above, ‘Kk’ is called Kalman gain, which is used to control how the error term affects the estimation. Our goal is to calculate the kalman gain to predict the next output.
 <ul>
 <li>To calculate kalman gain<br>
-To find the Kalman gain,</li>
+To find the Kalman gain, let think of maximum likehood. In <img src="./Images/model_4.png" alt="noise model">, it’s actually calculating the covariance between measurement and expected value. When the probability is maximized, the error between measurement and the expected value is minimized and this is what we want. Therefore, we need to find a way to maximize the probability and return its arguments to update the Kalman gain.<br>
+Now calculate the trace of the matrix Pk to get  T[Pk], which can convert the matrix to scalar value.<br>
+Then combine equation <img src="./Images/cal_1.png" alt="relationship"> with <img src="./Images/model_4.png" alt="noise model"> to insert the Kalman gain to equation and set the derivative of T[Pk] to zero (since at local maxima, derivative of T[Pk] =0) . Then we reach:<br>
+<img src="./Images/cal_2.png" alt="relationship"></li>
 </ul>
 </li>
 </ul>
