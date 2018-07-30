@@ -33,10 +33,9 @@
 			Measurement model:
 
 			![process model](./Images/model_2.png)
+
 		+ #### Designing a kalman filter
-			d
 	+ ### Extended Kalman filter (EKF)
-		+ 
 2. ## Flowchart
 3. ## Pseudo Code
 4. ## My Summary
