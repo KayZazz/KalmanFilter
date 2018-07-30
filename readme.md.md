@@ -38,9 +38,6 @@ Measurement model:</p>
 </li>
 <li>
 <h3 id="extended-kalman-filter-ekf">Extended Kalman filter (EKF)</h3>
-<ul>
-<li></li>
-</ul>
 </li>
 </ul>
 </li>
