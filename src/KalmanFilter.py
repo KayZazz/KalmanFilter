@@ -192,7 +192,6 @@ def loadData(model = "linear"):
 
     H = np.mat(np.identity(features_num))
 
-
     return t, y, H, phi
 
 
