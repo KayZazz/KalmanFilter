@@ -2,9 +2,12 @@
 1. ## Introduction
 	+ ### Linear Kalman filter (KF)
 		+ #### Models in Kalman filter 
+```
 			In kalman filter, there are 2 kinds of models: process model and measurement model.
 		   Process model:
+```
 		   ![process model](./Images/model_1.png)
+```
 		   where  
 		   
 			    *state vector*: 
@@ -24,6 +27,7 @@
 			    [1, delta_t] is the transition matrix here
 			    
 			Measurement model:
+```
 			![process model](./Images/model_2.png)
 		+ #### Designing a kalman filter
 			d
