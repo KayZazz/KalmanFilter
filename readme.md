@@ -10,10 +10,13 @@
 		   where  
 			    *state vector*:     
 			    input vector x. x represents the states of the system you design (set of states)
+			    
 			    *state variable*: 
 			    each variable inside x. Each state variable represents a state in the system(velocity, position)
+			    
 			    *trainsition matrix*: 
-			    matrix phi beside input vector x . Transition matrix is the matrix transiting the states at k moment to states at k+1 moment. The transition matrix is dependent on the system you build. 			    
+			    matrix phi beside input vector x . Transition matrix is the matrix transiting the states at k moment to states at k+1 moment. The transition matrix is dependent on the system you build. 			
+			        
 			    For example: 
 			    we know velocity v_k= a * t_k at k moment. 
 			    In k+1 moment, v_k+1 = a* t_k+1. Then we have v_k+1 = v_k + a* (t_k+1 - t_k).  To represent v and a in matrix form:
