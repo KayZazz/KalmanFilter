@@ -4,9 +4,7 @@
 ---
 
 <h1 id="kalman-filter">Kalman Filter</h1>
-<ol>
-<li>
-<h2 id="introduction">Introduction</h2>
+<h2 id="introduction">1.  Introduction</h2>
 <ul>
 <li>
 <h3 id="linear-kalman-filter-kf">Linear Kalman filter (KF)</h3>
@@ -31,7 +29,7 @@ For example:	<br>
 we know velocity v_k= a * t_k at k moment.  In k+1 moment, v_k+1 = a</em> t_k+1. Then we have v_k+1 = v_k + a</em> (t_k+1 - t_k).  To represent v and a in matrix form:<br>
 [v_k+1, a_k+1]^T  = [1, delta_t]* [v_k, a_k]^T<br>
 [1, delta_t] is the transition matrix here</p>
-</li>
+<ul>
 <li>
 <p>Measurement model:</p>
 <p><img src="./Images/model_2.png" alt="process model"><br>
@@ -48,14 +46,16 @@ in noise model, there are 3 covariance matrices to representing the information 
 </li>
 </ul>
 </li>
+</ul>
+<ul>
 <li>
 <h4 id="designing-a-kalman-filter">Designing a kalman filter</h4>
 <ul>
 <li>
 <p>The key idea of Kalman filter is to use maximium likehood method to minimize the error between the expected output signal and the measurement. In kalman filter, it defines <em>estimation</em> <img src="./Images/v1.png" alt="v1">  and <em>prior estimation</em> <img src="./Images/v2.png" alt="v2"><br>
 Their relation is:<br>
-<img src="./Images/cal_1.png" alt="relationship"><br>
-where "Zk - HXk` " is called measurement residual. It is the error term between actual states and estimated states. In my prospective,  <img src="./Images/v1.png" alt="v1"> can be considered as the expected output states processed with noise term, which can have the ‘ability’ to ‘fight against’ the noise. Then it is used to predict the next output by transition matrix.<br>
+<img src="./Images/cal_1.png" alt="relationship"></p>
+<p>where "Zk - HXk` " is called measurement residual. It is the error term between actual states and estimated states. In my prospective,  <img src="./Images/v1.png" alt="v1"> can be considered as the expected output states processed with noise term, which can have the ‘ability’ to ‘fight against’ the noise. Then it is used to predict the next output by transition matrix.<br>
 What’s more, in the equation above, ‘Kk’ is called Kalman gain, which is used to control how the error term affects the estimation. Our goal is to calculate the kalman gain to predict the next output.</p>
 <ul>
 <li>
@@ -102,23 +102,20 @@ After update the covariance matrix at k moment, we can use the covariance matrix
 <p>extended kalman filter is to model the non-linear system. The difference between EKF and linear KF shown as following:<br>
 <img src="./Images/EKF.png" alt="EKF"></p>
 <p>where:<br>
-<strong>F</strong> is the transition matrix.<br>
-<strong>Bu</strong> is the control input<br>
+<em>F</em> is the transition matrix.<br>
+<em>Bu</em> is the control input<br>
 EKF uses derivative method to calcuate the transition matrix <strong>F</strong> and connection matrix <strong>H</strong> in order to update estimate <strong>Pk</strong> and Kalman gain. More details are introduced in 	<a href="https://drive.google.com/file/d/0By_SW19c1BfhSVFzNHc0SjduNzg/view">Kalman and Bayesian Filters in Python</a></p>
 </li>
 </ul>
 </li>
-<li>
-<h2 id="flowchart">Flowchart</h2>
+</ul>
+<h2 id="flowchart">2. Flowchart</h2>
 <p><img src="./Images/flowchart.png" alt="flowchart"></p>
-</li>
-<li>
-<h2 id="my-summary">My Summary</h2>
-</li>
-</ol>
+<h2 id="my-summary">3. My Summary</h2>
 <p>In my opinion, Kalman filter is to use error minimization and maximum likehood method to minimize the error between actual measurement and estimated states. As the likehood is maximized, the error will get close to zero. It also applies the noise term in the estimate to ‘fight against’ the noise in measurement.<br>
-4. ## Reference<br>
-This note is referred to  this <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> PDF</a> . More details can be found here.<br>
+Generally, There are 2 steps in Kalman filter : predict step and update step. In predict step, it computes the Kalman gain, estimate and covariance at k moment. In update step, it updates the prior estimate and the prior covariance for the next moment.</p>
+<h2 id="reference">4. Reference</h2>
+<p>This note is referred to  this <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> PDF</a> . More details can be found here.<br>
 Further reading:<br>
 <a href="https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf">unscented kalman filter</a><br>
 <a href="http://www.cs.unc.edu/~tracker/media/pdf/SIGGRAPH2001_CoursePack_08.pdf">An introduction to the Kalman Filter</a><br>
