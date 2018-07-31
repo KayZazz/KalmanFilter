@@ -21,7 +21,7 @@
 input vector x. x represents the states of the system you design (set of states)<br>
 <em>state variable <em>:<br>
 each variable inside x. Each state variable represents a state in the system(velocity, position)<br>
-<em>trainsition matrix</em> <img src="./phi.png" alt="phi">:<br>
+<em>trainsition matrix</em> <img src="./Images/phi.png" alt="phi">:<br>
 Transition matrix is the matrix transiting the states at k moment to states at k+1 moment. The transition matrix is dependent on the system you build.<br>
 <em>noise term Wk</em>:<br>
 usually the noise is in Gaussain noise<br>
