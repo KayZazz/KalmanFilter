@@ -1,8 +1,3 @@
----
-
-
----
-
 <h1 id="kalman-filter">Kalman Filter</h1>
 <h2 id="introduction">1.  Introduction</h2>
 <ul>
