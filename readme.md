@@ -111,7 +111,7 @@ EKF uses derivative method to calcuate the transition matrix <strong>F</strong> 
 </ul>
 <h2 id="flowchart">2. Flowchart</h2>
 <p><img src="./Images/flowchart.png" alt="flowchart"></p>
-<h2 id="my-summary">3. My Summary</h2>
+<h2 id="summary">3. Summary</h2>
 <p>In my opinion, Kalman filter is to use error minimization and maximum likehood method to minimize the error between actual measurement and estimated states. As the likehood is maximized, the error will get close to zero. It also applies the noise term in the estimate to ‘fight against’ the noise in measurement.<br>
 Generally, There are 2 steps in Kalman filter : predict step and update step. In predict step, it computes the Kalman gain, estimate and covariance at k moment. In update step, it updates the prior estimate and the prior covariance for the next moment.</p>
 <h2 id="addition">4. Addition</h2>
