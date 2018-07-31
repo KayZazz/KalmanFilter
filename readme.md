@@ -78,12 +78,12 @@ To update estimate, use the following equation (which was mentioned above):</p>
 To update the covariance matrix Pk, we need to plug the kalman gain equation back to</p>
 <p><img src="./Images/cal_4.png" alt="gain"><br>
 and then we get:</p>
-<p><img src="./Images/cov.png" alt="gain"></p>
+<p><img src="./Images/cov.png" alt="cov"></p>
 </li>
 <li>
 <p><strong>Project to k+1 moment</strong><br>
 After update the covariance matrix at k moment, we can use the covariance matrix equation to update prior covariance at k+1 moment:</p>
-<p><img src="./Images/prj.png" alt="gain"></p>
+<p><img src="./Images/prj_k1.png" alt="prj to k+1"></p>
 </li>
 </ul>
 </li>
