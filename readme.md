@@ -97,6 +97,8 @@ After update the covariance matrix at k moment, we can use the covariance matrix
 </li>
 </ul>
 </li>
+</ul>
+</li>
 <li>
 <h3 id="extended-kalman-filter-ekf">Extended Kalman filter (EKF)</h3>
 <p>extended kalman filter is to model the non-linear system. The difference between EKF and linear KF shown as following:<br>
@@ -105,8 +107,6 @@ After update the covariance matrix at k moment, we can use the covariance matrix
 <em>F</em> is the transition matrix.<br>
 <em>Bu</em> is the control input<br>
 EKF uses derivative method to calcuate the transition matrix <strong>F</strong> and connection matrix <strong>H</strong> in order to update estimate <strong>Pk</strong> and Kalman gain. More details are introduced in 	<a href="https://drive.google.com/file/d/0By_SW19c1BfhSVFzNHc0SjduNzg/view">Kalman and Bayesian Filters in Python</a></p>
-</li>
-</ul>
 </li>
 </ul>
 <h2 id="flowchart">2. Flowchart</h2>
