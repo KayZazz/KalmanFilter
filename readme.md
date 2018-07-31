@@ -120,4 +120,6 @@ Further reading:<br>
 <a href="https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf">unscented kalman filter</a><br>
 <a href="http://www.cs.unc.edu/~tracker/media/pdf/SIGGRAPH2001_CoursePack_08.pdf">An introduction to the Kalman Filter</a><br>
 <a href="https://drive.google.com/file/d/0By_SW19c1BfhSVFzNHc0SjduNzg/view">Kalman and Bayesian Filters in Python</a></p>
+<h2 id="addition">5. Addition</h2>
+<p>Since this is my first time to write theoretical note on GitHub, if you have any suggestions, please feel free to commit here.</p>
 
