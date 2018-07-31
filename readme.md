@@ -99,6 +99,12 @@ After update the covariance matrix at k moment, we can use the covariance matrix
 </li>
 <li>
 <h3 id="extended-kalman-filter-ekf">Extended Kalman filter (EKF)</h3>
+<p>extended kalman filter is to model the non-linear system. The difference between EKF and linear KF shown as following:<br>
+<img src="./Images/EKF.png" alt="EKF"></p>
+<p>where:<br>
+<strong>F</strong> is the transition matrix.<br>
+<strong>Bu</strong> is the control input<br>
+EKF uses derivative method to calcuate the transition matrix <strong>F</strong> and connection matrix <strong>H</strong> in order to update estimate <strong>Pk</strong> and Kalman gain. More details are introduced in 	<a href="https://drive.google.com/file/d/0By_SW19c1BfhSVFzNHc0SjduNzg/view">Kalman and Bayesian Filters in Python</a></p>
 </li>
 </ul>
 </li>
@@ -109,12 +115,12 @@ After update the covariance matrix at k moment, we can use the covariance matrix
 <li>
 <h2 id="my-summary">My Summary</h2>
 </li>
-<li>
-<h2 id="reference">Reference</h2>
-<p>This note is referred to  this <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> PDF</a> . More details can be found here.<br>
+</ol>
+<p>In my opinion, Kalman filter is to use error minimization and maximum likehood method to minimize the error between actual measurement and estimated states. As the likehood is maximized, the error will get close to zero. It also applies the noise term in the estimate to ‘fight against’ the noise in measurement.<br>
+4. ## Reference<br>
+This note is referred to  this <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> PDF</a> . More details can be found here.<br>
 Further reading:<br>
 <a href="https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf">unscented kalman filter</a><br>
-<a href="http://www.cs.unc.edu/~tracker/media/pdf/SIGGRAPH2001_CoursePack_08.pdf">An introduction to the Kalman Filter</a></p>
-</li>
-</ol>
+<a href="http://www.cs.unc.edu/~tracker/media/pdf/SIGGRAPH2001_CoursePack_08.pdf">An introduction to the Kalman Filter</a><br>
+<a href="https://drive.google.com/file/d/0By_SW19c1BfhSVFzNHc0SjduNzg/view">Kalman and Bayesian Filters in Python</a></p>
 
