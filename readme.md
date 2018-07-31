@@ -1,3 +1,8 @@
+---
+
+
+---
+
 <h1 id="kalman-filter">Kalman Filter</h1>
 <h2 id="introduction">1.  Introduction</h2>
 <ul>
@@ -112,7 +117,7 @@ Generally, There are 2 steps in Kalman filter : predict step and update step. In
 <h2 id="addition">4. Addition</h2>
 <p>Source code is <a href="./src">here</a></p>
 <h2 id="reference">5. Reference</h2>
-<p>This note is referred to  this <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> PDF</a> . More details can be found here.<br>
+<p>Referrence can be found <a href="http://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman%20filter.pdf"> here</a> .<br>
 Further reading:<br>
 <a href="https://www.seas.harvard.edu/courses/cs281/papers/unscented.pdf">unscented kalman filter</a><br>
 <a href="http://www.cs.unc.edu/~tracker/media/pdf/SIGGRAPH2001_CoursePack_08.pdf">An introduction to the Kalman Filter</a><br>
