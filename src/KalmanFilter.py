@@ -6,9 +6,8 @@ import matplotlib.pyplot as plt
 
 
 class KFStruct():
-    def __init__(self, x_p, phi,R ,Q, H ):
+    def __init__(self, x_p, phi,R ,Q, H, KF_tyoe='LKF'):
         """
-
         :param x_p:
             prior estimate variable x^, shape: 1 x m
         :param phi:
@@ -23,17 +22,19 @@ class KFStruct():
         phi: state transition matrix
         R: noise model
         Q: noise model
-        H: connection matrix between observation z and x_p
+        H: connection matrix H between observation z and x_p
         X_p: prior estimate xk'
         Xk: estimate xk
         zk: observation state vector from senors
         K : m x m kalman gain matrix
+        h: non-linear connection function
+        f: non-linear transition function
         """
         self.X_p = x_p
         self.phi = phi
+        self.H = H
         self.R = R
         self.Q = Q
-        self.H = H
         self.Xk = np.mat(np.zeros([1, np.shape(x_p)[1]]))
         self.Pk = np.mat(np.identity(np.shape(x_p)[1]))
         self.Pk_p = np.mat(np.identity(np.shape(x_p)[1]))
@@ -73,12 +74,11 @@ class KFStruct():
             H: m x m connection matrix
         :return:
         """
-
         # print("H",np.shape(self.H))
         # print("X_p:", np.shape(self.X_p))
+        # linear Kalman filter
         ik = (self.zk.T - self.H * np.transpose(self.X_p))
         self.Xk = self.X_p + (self.K * ik).T
-
         return self.Xk
 
     def update_cov(self):
@@ -94,6 +94,13 @@ class KFStruct():
         idMat = np.mat(np.identity(np.shape(self.X_p)[1]))
         self.Pk = (idMat - np.multiply(self.K,self.H)) * self.Pk_p
         return self.Pk
+
+    def update(self):
+        # # update estimate
+        self.update_Xk()
+        # print("x%d:"%(t), data)
+        # # update covariance
+        self.update_cov()
 
     def get_PrjPrediction(self):
         """
@@ -114,23 +121,23 @@ class KFStruct():
         :return:
             estimated state vector
         """
-        prediction = 0.0
-        # update Kalman gain
-        self.cal_Kk()
+
         # # obtain observation data
         self.get_ObsData(data)
         self.X_p = expected_s
-        # # update estimate
-        self.update_Xk()
-        # print("x%d:"%(t), data)
-        # # update covariance
-        self.update_cov()
+
+        # update Kalman gain
+        self.cal_Kk()
+
+        # update step
+        self.update()
         # print("cov Mat: ",covMat)
         # # project to new state and return filtered data
         prediction =self.get_PrjPrediction()
         return prediction
 
-def loadData(model = "linear"):
+
+def loadData(model = "linear", f= None, df= None):
     """
     x : time array
     y : matrix of states
@@ -138,16 +145,17 @@ def loadData(model = "linear"):
     :return:
     """
     features_num =3
-    t = np.arange(1, 50.0,0.5,dtype= float)
+    dt = 0.5
+    t = np.arange(1, 50.0,dt,dtype= float)
     y = np.mat(np.zeros([len(t), features_num]))
-
+    H = np.mat(np.identity(features_num))
     # linear input examples
     if model.lower() == 'linear':
         a0= 1.2
         y[:,0] = np.mat( a0 *t**2/2).T
         y[:,1] = np.mat(a0 * t).T
         y[:,2] =np.mat(np.ones([1,len(t)]) * a0).T
-        dt =0.5
+
         phi =np.mat([[1,dt,0],
                      [0,1,0],
                      [0,1,0]])
@@ -164,13 +172,12 @@ def loadData(model = "linear"):
         y[:,1] = (np.power(np.ones([1,len(t)])*k0,t)* a0 * t).T
         # acceleration
         y[:,2] = (np.power(np.ones([1,len(t)])*k0,t)* a0).T
-        dt = 0.5
         phi = np.mat([[1, dt, dt ** 2 * k0],
                       [0, 1, k0 * dt],
                       [0, 0, k0]])
         # generate the corresponding state transition matrix
         # and connection matrix
-    else:
+    elif model.lower() == 'accosc':
         # acceleration-oscillating model
         a0 = 2.0*np.array(np.sin(t))
         # print("a0:",a0)
@@ -184,14 +191,24 @@ def loadData(model = "linear"):
         y[:, 1] = (a0 * t).reshape([1,98]).T
         # acceleration
         y[:, 2] = a0.reshape([1,98]).T
-        dt = 0.5
         phi = np.mat([[1, dt, dt ** 2 ],
                       [0, 1, dt ],
                       [0, 0, 1]])
         pass
-
-    H = np.mat(np.identity(features_num))
-
+    else:
+        # non-linear
+        features_num = 2
+        y = np.mat(np.zeros([len(t), features_num]))
+        H = np.mat(np.identity(features_num))
+        # initialize velocity v=1.0. position =0 with non-linear function
+        y[0,:] = f(np.mat([0,0.4]))
+        for i in range(1, len(t)-1):
+            # input matrix
+            y[i,:] = f(y[i-1,:])
+            pass
+        #initial phi
+        phi = df(y[0,:])
+        print("Phi: ",phi)
     return t, y, H, phi
 
 
@@ -200,11 +217,11 @@ def generate_Noise(shape=4, model="Gauss", sigma =1.0):
     Q = np.mat(np.identity(shape))
     if model.lower() == "gauss":
         for i in range(shape):
-            R[i,:] = np.random.normal(0,sigma,shape)
+            R[i,i] = np.random.normal(0,sigma,1)
 
         rand_num = np.random.rand(1)
         for i in range(shape):
-            Q[i, :] = np.random.normal(0, sigma, shape)
+            Q[i, i] = np.random.normal(0, sigma, 1)
             pass
 
     elif model.lower() == "linear":
@@ -214,21 +231,34 @@ def generate_Noise(shape=4, model="Gauss", sigma =1.0):
         print("Don't recognize model:%s"%(model))
     return R, Q
 
+
+
 def plot_data(x,y, estmated_y,actual_obv):
-    plot = plt.figure()
-    ax = plot.add_subplot(111)
-    ax.scatter(x[:],actual_obv,s=10,c='g')
-    ax.scatter(x[:],y[:],s=10,c='r')
-    ax.scatter(x[:],estmated_y[:],s=10,c='b')
-    # ax.plot(x[0,:].flatten().A[0],y[0,:].flatten().A[0])
-    # ax.plot(x[0,:].flatten().A[0],y[0,:].flatten().A[0])
-    # ax.plot(x[:],y[:])
-    # ax.plot(x[:],estmated_y[:])
-    # to show the plot use module name 'plt' instead of instance 'plot'
-    plt.show()
+    s = { 0:"Position",1:"Velocity",2:"acceleration"}
+    for i in range(y.shape[1]):
+        plot = plt.figure()
+        ax = plot.add_subplot(111)
+        ax.scatter(x[:],actual_obv[:,i].flatten()[0],s=10,c='g',label = 'Observation')
+        ax.scatter(x[:],y[:,i].flatten()[0],s=10,c='r',label = 'Expectation')
+        ax.scatter(x[:],estmated_y[:,i].flatten()[0],s=10,c='b',label = 'Estimate')
+        ax.set_ylabel(s[i])
+        ax.set_xlabel("time")
+        ax.legend(loc=1)
+        plt.show()
     pass
 
 
+
+def info_decorator(text):
+    def wrapper(func):
+        def wrapped_func():
+            print(text)
+            func()
+            return
+        return wrapped_func
+    return wrapper
+
+@info_decorator("Kalman filter test")
 def KFTest():
     # load test data
     x, y, H, phi = loadData(model="accmove")
@@ -237,20 +267,21 @@ def KFTest():
     actual_obv = np.mat(np.zeros([y.shape[0], y.shape[1]]))
     for i in range(y.shape[1]):
         actual_obv[:, i] = y[:, i] + np.mat(np.random.normal(0, 100, y.shape[0])).T
-
     print("x:", x.shape)
     print("y:", y.shape)
     print("actual:", actual_obv.shape)
 
     #generate noise model
-    R,Q = generate_Noise(3, model="linear", sigma= 0.01)
-    print("R:",R)
-    print("Q:",Q)
+    R,Q = generate_Noise(3, model="gauss", sigma= 0.01)
+    print("R:",R.shape)
+    print("Q:",Q.shape)
 
     # initialize Kalman filter params
     kf_obj = KFStruct(y[0,:],phi,R,Q,H)
-    estimated_v = []
+
+
     # predict data
+    estimated_v = []
     for k in range(y.shape[0]):
         # input the control state vector
         if k+1 >= y.shape[0]:
@@ -263,22 +294,15 @@ def KFTest():
         pass
 
     # plot data
-    for i in range(y.shape[1]):
-        # estimated_v : filtered prediction output
-        # y: expected output
-        # actual_obv: actual observation data
-        plot_data(x,y[:,i], np.mat(np.array(estimated_v))[:,i], actual_obv[:,i])
-
-    # print(x,np.array(estimated_v))
+    # estimated_v : filtered prediction output
+    # y: expected output
+    # actual_obv: actual observation data
+    plot_data(x,y, np.mat(np.array(estimated_v)), actual_obv)
     pass
 
 
 
 
-
-
-
 if __name__ == "__main__":
-    print("Kalman Filter Demo")
     KFTest()
     pass
