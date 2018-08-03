@@ -142,7 +142,7 @@ def generate_Noise(shape=4, model="Gauss", sigma =1.0):
     Q = np.mat(np.identity(shape))
     from filterpy.common import Q_discrete_white_noise
     if model.lower() == "gauss":
-        Q_discrete_white_noise()
+
         for i in range(shape):
             R[i,i] = np.mat(np.random.normal(0,sigma,1))
             Q[i,i] = np.mat(np.random.normal(0, sigma,1))
@@ -171,7 +171,7 @@ def EKFTest():
     print("y:", y)
     print("actual:", actual_obv.shape)
     # generate noise model
-    R, Q = generate_Noise(3, model="Gauss", sigma=0.01)
+    R, Q = generate_Noise(3, model="linear", sigma=0.01)
     print("R:", R)
     print("Q:", Q)
 
