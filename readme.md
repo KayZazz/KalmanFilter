@@ -125,3 +125,6 @@ Further reading:<br>
 <h2 id="addition-1">6. Addition</h2>
 <p>Since this is my first time to write theoretical note on GitHub, if you have any suggestions, please feel free to commit here.</p>
 
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTE3Mjk1NjU0MjddfQ==
+-->
